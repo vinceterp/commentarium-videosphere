@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import CommentSection from "@/components/CommentSection";
 import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Eye } from "lucide-react";
 
 const VideoPage = () => {
   const { videoId } = useParams();
@@ -18,6 +18,10 @@ const VideoPage = () => {
               alt="Video thumbnail"
               className="w-full h-full object-cover"
             />
+            <div className="absolute bottom-4 right-4 bg-black/75 text-white px-3 py-1 rounded-full flex items-center space-x-2">
+              <Eye className="h-4 w-4" />
+              <span className="text-sm font-medium">0 views</span>
+            </div>
           </div>
           <Button 
             variant="secondary" 
