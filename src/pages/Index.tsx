@@ -46,9 +46,9 @@ const Index = () => {
           }}
           className="w-full"
         >
-          <CarouselContent className="-ml-[15%]">
+          <CarouselContent className="-ml-[8%]">
             {examples.map((example, index) => (
-              <CarouselItem key={index} className="pl-[15%] basis-[70%]">
+              <CarouselItem key={index} className="pl-[8%] basis-[84%]">
                 <div className="glass-morphism p-6 rounded-lg h-full">
                   <div className="flex flex-col md:flex-row gap-6">
                     <div className="flex-1 space-y-4">
