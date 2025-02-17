@@ -31,6 +31,10 @@ const examples = [
 const Index = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 gap-12">
+      <h1 className="text-4xl font-bold text-secondary text-center animate-fade-in">
+        Hidden comments? Start the real discussion
+      </h1>
+
       <div className="w-full max-w-6xl mx-auto">
         <Carousel
           opts={{
