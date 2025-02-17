@@ -7,19 +7,25 @@ import { Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import VideoPage from "./pages/VideoPage";
 import NotFound from "./pages/NotFound";
+import SignIn from "./pages/SignIn";
+import Navbar from "./components/Navbar";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/video/:videoId" element={<VideoPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Navbar />
+      <div className="pt-16"> {/* Add padding to account for fixed navbar */}
+        <Toaster />
+        <Sonner />
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/video/:videoId" element={<VideoPage />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
     </TooltipProvider>
   </QueryClientProvider>
 );

@@ -11,16 +11,19 @@ const examples = [
   {
     title: "Beautiful Nature Documentary",
     url: "https://youtu.be/v7yyhy5Ya5A",
+    thumbnail: "https://img.youtube.com/vi/v7yyhy5Ya5A/maxresdefault.jpg",
     comments: ["Breathtaking views!", "Nature at its finest", "Amazing footage!"],
   },
   {
     title: "Space Exploration",
     url: "https://youtu.be/watch?v=udAL48P5NJU",
+    thumbnail: "https://img.youtube.com/vi/udAL48P5NJU/maxresdefault.jpg",
     comments: ["Mind-blowing!", "Space is fascinating", "Can't wait for more!"],
   },
   {
     title: "Cooking Masterclass",
     url: "https://youtu.be/watch?v=8SU0gFPMwP8",
+    thumbnail: "https://img.youtube.com/vi/8SU0gFPMwP8/maxresdefault.jpg",
     comments: ["Great recipe!", "Thanks for sharing", "Will try this weekend"],
   },
 ];
@@ -41,31 +44,42 @@ const Index = () => {
         >
           <CarouselContent>
             {examples.map((example, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                <div className="glass-morphism p-6 rounded-lg space-y-4 h-full">
-                  <div className="space-y-4">
-                    <div className="bg-black/40 rounded-lg p-4">
-                      <div className="flex items-center gap-2 text-secondary mb-2">
-                        <Youtube className="h-5 w-5" />
-                        <h3 className="font-semibold">{example.title}</h3>
+              <CarouselItem key={index} className="md:basis-1/2 lg:basis-2/3">
+                <div className="glass-morphism p-6 rounded-lg h-full">
+                  <div className="flex flex-col md:flex-row gap-6">
+                    <div className="flex-1 space-y-4">
+                      <div className="aspect-video rounded-lg overflow-hidden">
+                        <img
+                          src={example.thumbnail}
+                          alt={example.title}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
-                      <p className="text-sm text-gray-300 font-mono break-all">
-                        {example.url}
-                      </p>
+                      <div className="bg-black/40 rounded-lg p-4">
+                        <div className="flex items-center gap-2 text-secondary mb-2">
+                          <Youtube className="h-5 w-5" />
+                          <h3 className="font-semibold">{example.title}</h3>
+                        </div>
+                        <p className="text-sm text-gray-300 font-mono break-all">
+                          {example.url}
+                        </p>
+                      </div>
                     </div>
-                    <div className="space-y-2">
+                    <div className="flex-1 space-y-4">
                       <div className="flex items-center gap-2 text-secondary">
                         <MessageCircle className="h-5 w-5" />
                         <h4 className="font-semibold">Example Comments</h4>
                       </div>
-                      {example.comments.map((comment, idx) => (
-                        <div
-                          key={idx}
-                          className="bg-black/40 p-3 rounded text-sm text-gray-300"
-                        >
-                          {comment}
-                        </div>
-                      ))}
+                      <div className="space-y-3">
+                        {example.comments.map((comment, idx) => (
+                          <div
+                            key={idx}
+                            className="bg-black/40 p-4 rounded text-sm text-gray-300"
+                          >
+                            {comment}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
