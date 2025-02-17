@@ -38,7 +38,7 @@ const Index = () => {
       <div className="w-full max-w-6xl mx-auto">
         <Carousel
           opts={{
-            align: "start",
+            align: "center",
             loop: true,
             skipSnaps: false,
             duration: 20,
@@ -46,9 +46,9 @@ const Index = () => {
           }}
           className="w-full"
         >
-          <CarouselContent>
+          <CarouselContent className="-ml-[15%]">
             {examples.map((example, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-2/3">
+              <CarouselItem key={index} className="pl-[15%] basis-[70%]">
                 <div className="glass-morphism p-6 rounded-lg h-full">
                   <div className="flex flex-col md:flex-row gap-6">
                     <div className="flex-1 space-y-4">
