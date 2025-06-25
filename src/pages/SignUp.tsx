@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRegisterUserMutation } from "@/hooks/use-register-user";
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -11,24 +12,17 @@ const SignUp = () => {
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
 
-  const { data, mutate, error, isPending } = useRegisterUserMutation();
+  const { mutate, isPending } = useRegisterUserMutation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle sign up logic here
     if (password !== confirmPassword) {
-      console.error("Passwords do not match");
+      window.alert("Passwords do not match");
       return;
     }
     // Call the mutation to register the user
     mutate({ email, password, firstName, lastName, username });
-    console.log("Signing up with:", {
-      email,
-      password,
-      firstName,
-      lastName,
-      confirmPassword,
-    });
   };
 
   return (

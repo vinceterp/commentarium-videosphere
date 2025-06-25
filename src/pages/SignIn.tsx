@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -70,9 +71,9 @@ const SignIn = () => {
         </form>
         <p className="text-sm text-center text-gray-400">
           Don't have an account?{" "}
-          <a href="/signup" className="text-secondary hover:underline">
+          <Link to="/signup" className="text-secondary hover:underline">
             Sign Up
-          </a>
+          </Link>
         </p>
       </div>
     </div>
