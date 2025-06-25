@@ -15,14 +15,15 @@ const URLSubmitForm = () => {
   };
 
   const getVideoId = (url: string) => {
-    const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+    const regex =
+      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
     const match = url.match(regex);
     return match ? match[1] : null;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateYouTubeUrl(url)) {
       toast({
         variant: "destructive",
@@ -39,9 +40,20 @@ const URLSubmitForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto space-y-4">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-2xl mx-auto space-y-4"
+    >
       <div className="glass-morphism p-6 rounded-lg space-y-4">
-        <h2 className="text-2xl font-bold text-center mb-4">Share a YouTube Video</h2>
+        <h2 className="text-2xl font-bold text-center">
+          Share a YouTube Video
+        </h2>
+        <p
+          className="opacity-50 mt-24 text-sm text-center"
+          style={{ marginTop: 0 }}
+        >
+          (with comments disabled)
+        </p>
         <div className="flex gap-2">
           <Input
             type="url"

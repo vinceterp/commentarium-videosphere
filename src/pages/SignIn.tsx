@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -15,10 +14,13 @@ const SignIn = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="glass-morphism p-8 rounded-lg w-full max-w-md space-y-6">
-        <h1 className="text-2xl font-bold text-center text-secondary">Sign In</h1>
+        <h1 className="text-2xl font-bold text-center">Sign In</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium text-gray-200">
+            <label
+              htmlFor="email"
+              className="text-sm font-medium text-gray-200"
+            >
               Email Address
             </label>
             <Input

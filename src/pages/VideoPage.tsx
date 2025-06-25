@@ -19,16 +19,16 @@ const VideoPage = () => {
               className="w-full h-full object-cover"
             />
           </div>
-          
+
           <div className="flex items-center justify-between">
             <div className="bg-black/75 text-white px-3 py-1 rounded-full flex items-center space-x-2">
               <Eye className="h-4 w-4" />
               <span className="text-sm font-medium">0 views</span>
             </div>
-            <Button 
-              variant="secondary" 
+            <Button
+              variant="secondary"
               className="w-auto"
-              onClick={() => window.open(videoUrl, '_blank')}
+              onClick={() => window.open(videoUrl, "_blank")}
             >
               <ExternalLink className="mr-2 h-4 w-4" />
               Watch on YouTube

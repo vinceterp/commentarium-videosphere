@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,7 +15,9 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Navbar />
-      <div className="pt-16"> {/* Add padding to account for fixed navbar */}
+      <div className="pt-16">
+        {" "}
+        {/* Add padding to account for fixed navbar */}
         <Toaster />
         <Sonner />
         <Routes>

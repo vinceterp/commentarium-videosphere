@@ -48,17 +48,27 @@ const Comment = ({ comment, depth = 0 }: CommentProps) => {
   };
 
   return (
-    <div className={`space-y-4 ${depth > 0 ? "ml-6 pl-4 border-l border-muted" : ""}`}>
+    <div
+      className={`space-y-4 ${depth > 0 ? "ml-6 pl-4 border-l border-muted" : ""}`}
+    >
       <div className="glass-morphism p-4 rounded-lg space-y-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Avatar className="h-8 w-8">
-              <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${comment.author}`} />
-              <AvatarFallback>{comment.author.slice(0, 2).toUpperCase()}</AvatarFallback>
+              <AvatarImage
+                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${comment.author}`}
+              />
+              <AvatarFallback>
+                {comment.author.slice(0, 2).toUpperCase()}
+              </AvatarFallback>
             </Avatar>
             <div className="flex flex-col items-start">
-              <span className="font-semibold text-secondary">{comment.author}</span>
-              <span className="text-xs text-muted-foreground">{comment.timestamp}</span>
+              <span className="font-semibold text-secondary">
+                {comment.author}
+              </span>
+              <span className="text-xs text-muted-foreground">
+                {comment.timestamp}
+              </span>
             </div>
           </div>
           <Button variant="ghost" size="icon" onClick={handleEdit}>
