@@ -84,7 +84,7 @@ const Index = () => {
                     <div className="flex-1 space-y-4">
                       <div className="flex items-center gap-2 text-secondary">
                         <MessageCircle className="h-5 w-5" />
-                        <h4 className="font-semibold">Example Comments</h4>
+                        <h4 className="font-semibold">Comments</h4>
                       </div>
                       <div className="space-y-3">
                         {example.comments.map((comment, idx) => (
