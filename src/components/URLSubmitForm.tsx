@@ -14,7 +14,7 @@ const URLSubmitForm = () => {
     return regex.test(url);
   };
 
-  const getVideoId = (url: string) => {
+  const getPostId = (url: string) => {
     const regex =
       /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
     const match = url.match(regex);
@@ -33,9 +33,9 @@ const URLSubmitForm = () => {
       return;
     }
 
-    const videoId = getVideoId(url);
-    if (videoId) {
-      navigate(`/video/${videoId}`);
+    const postId = getPostId(url);
+    if (postId) {
+      navigate(`/post/${postId}`);
     }
   };
 
@@ -63,7 +63,7 @@ const URLSubmitForm = () => {
             className="flex-1 bg-accent"
           />
           <Button type="submit" className="bg-secondary hover:bg-secondary/80">
-            Submit
+            Create Post
           </Button>
         </div>
       </div>

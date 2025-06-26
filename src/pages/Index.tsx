@@ -8,10 +8,9 @@ import { MessageCircle, Youtube } from "lucide-react";
 
 const examples = [
   {
-    title: "EA Sports College Football 24",
-    url: "https://www.youtube.com/watch?v=1e7P_nY2CKw",
-    thumbnail:
-      "https://i.ytimg.com/an_webp/1e7P_nY2CKw/mqdefault_6s.webp?du=3000&sqp=COC57MIG&rs=AOn4CLCqPl2LCgfa_J50npnvFLSBTc7a0Q",
+    title: "Chasing the Chinese Dream in Africa - Documentary 360",
+    url: "https://www.youtube.com/watch?v=34woI_H3nTc",
+    thumbnail: "https://img.youtube.com/vi/34woI_H3nTc/maxresdefault.jpg",
     comments: [
       "Breathtaking views!",
       "Nature at its finest",
@@ -22,16 +21,14 @@ const examples = [
     title:
       "Using Only Seeds My MIMIC OCTOPUS DIGS UP! (BETTER SEEDS?) | Grow a Garden",
     url: "https://youtu.be/watch?v=udAL48P5NJU",
-    thumbnail:
-      "https://i.ytimg.com/an_webp/Q8hOT67US1A/mqdefault_6s.webp?du=3000&sqp=COC_7MIG&rs=AOn4CLBVL0gpOkoEQo8AC9egwDvPi5JKAg",
+    thumbnail: "https://img.youtube.com/vi/udAL48P5NJU/maxresdefault.jpg",
     comments: ["Mind-blowing!", "Space is fascinating", "Can't wait for more!"],
   },
   {
     title:
       "The Best Fried Chicken Wings You'll Ever Make! You will cook it again & again!!!🔥😲 | 2 RECIPES",
     url: "https://www.youtube.com/watch?v=w8Y_uGGt_88",
-    thumbnail:
-      "https://i.ytimg.com/an_webp/w8Y_uGGt_88/mqdefault_6s.webp?du=3000&sqp=CK3F7MIG&rs=AOn4CLA3SKqU6Kz01qFgscrdmN_OYvGmRg",
+    thumbnail: "https://img.youtube.com/vi/w8Y_uGGt_88/maxresdefault.jpg",
     comments: ["Great recipe!", "Thanks for sharing", "Will try this weekend"],
   },
 ];
@@ -47,7 +44,7 @@ const Index = () => {
         <URLSubmitForm />
       </div>
 
-      <div className="w-full mx-auto">
+      <div className="w-full">
         <Carousel
           opts={{
             align: "center",

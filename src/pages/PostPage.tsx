@@ -3,10 +3,10 @@ import CommentSection from "@/components/CommentSection";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Eye } from "lucide-react";
 
-const VideoPage = () => {
-  const { videoId } = useParams();
-  const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-  const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+const PostPage = () => {
+  const { postId } = useParams();
+  const thumbnailUrl = `https://img.youtube.com/vi/${postId}/maxresdefault.jpg`;
+  const videoUrl = `https://www.youtube.com/watch?v=${postId}`;
 
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
@@ -44,4 +44,4 @@ const VideoPage = () => {
   );
 };
 
-export default VideoPage;
+export default PostPage;
