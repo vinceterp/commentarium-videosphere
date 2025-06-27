@@ -2,15 +2,32 @@ import { useParams } from "react-router-dom";
 import CommentSection from "@/components/CommentSection";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Eye } from "lucide-react";
+import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 
 const PostPage = () => {
   const { postId } = useParams();
   const thumbnailUrl = `https://img.youtube.com/vi/${postId}/maxresdefault.jpg`;
   const videoUrl = `https://www.youtube.com/watch?v=${postId}`;
 
+  const title = "Chasing the Chinese Dream in Africa - Documentary 360";
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto space-y-8">
+        <div>
+          <h1 className="text-2xl font-bold text-start animate-fade-in">
+            {title}
+          </h1>
+          <div className="flex items-center gap-2 mt-4">
+
+          <Avatar className="flex h-8 cursor-pointer">
+            <AvatarImage
+              src={`https://api.dicebear.com/7.x/avataaars/svg?seed=user}`}
+            />
+          </Avatar>
+          <p className="font-bold">John Doe</p>
+
+          </div>
+        </div>
         <div className="space-y-4">
           <div className="relative aspect-video rounded-lg overflow-hidden">
             <img
