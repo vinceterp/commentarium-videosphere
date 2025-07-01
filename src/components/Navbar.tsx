@@ -42,7 +42,7 @@ const Navbar = () => {
               </Link>
             ) : (
               <>
-                <p>{`Welcome, ${user?.firstName || user?.email}`}</p>
+                <p>{`Welcome, ${user?.username || user?.email}`}</p>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Avatar className="h-8 w-8 cursor-pointer">

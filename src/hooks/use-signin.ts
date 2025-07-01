@@ -28,6 +28,8 @@ export function useSignIn() {
       setUser(user);
       setIsAuthenticated(true);
 
+      api.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
+
       if (canGoBack) {
         window.history.back(); // Go back to the previous page if possible
       } else {

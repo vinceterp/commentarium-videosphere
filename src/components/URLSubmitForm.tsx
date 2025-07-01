@@ -1,13 +1,14 @@
+/* eslint-disable no-useless-escape */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { useCreatePostMutation } from "@/hooks/use-create-post";
 
 const URLSubmitForm = () => {
   const [url, setUrl] = useState("");
-  const navigate = useNavigate();
   const { toast } = useToast();
+  const { mutate: createPost, isPending } = useCreatePostMutation();
 
   const validateYouTubeUrl = (url: string) => {
     const regex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
@@ -35,7 +36,8 @@ const URLSubmitForm = () => {
 
     const postId = getPostId(url);
     if (postId) {
-      navigate(`/post/${postId}`);
+      createPost(url);
+      // navigate(`/post/${postId}`);
     }
   };
 
@@ -62,7 +64,11 @@ const URLSubmitForm = () => {
             onChange={(e) => setUrl(e.target.value)}
             className="flex-1 bg-accent"
           />
-          <Button type="submit" className="bg-secondary hover:bg-secondary/80">
+          <Button
+            loading={isPending}
+            type="submit"
+            className="bg-secondary hover:bg-secondary/80"
+          >
             Create Post
           </Button>
         </div>

@@ -1,3 +1,4 @@
+import api from "@/lib/axios";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
@@ -27,7 +28,11 @@ export const useUser = create<UserStore>()(
       setUser: (user) => set({ user }),
       isAuthenticated: false,
       setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
-      logout: () => set({ user: null, isAuthenticated: false }),
+      logout: () => {
+        set({ user: null, isAuthenticated: false });
+        // clear api default headers
+        delete api.defaults.headers.common["Authorization"];
+      },
     }),
     {
       name: "user-store",

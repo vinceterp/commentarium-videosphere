@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import CommentSection from "@/components/CommentSection";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Eye } from "lucide-react";
@@ -9,7 +9,13 @@ const PostPage = () => {
   const thumbnailUrl = `https://img.youtube.com/vi/${postId}/maxresdefault.jpg`;
   const videoUrl = `https://www.youtube.com/watch?v=${postId}`;
 
-  const title = "Chasing the Chinese Dream in Africa - Documentary 360";
+  // TODO: Fetch post data from API Only instead of using router state
+  const { state } = useLocation();
+
+  const title =
+    state?.post?.title ??
+    "Chasing the Chinese Dream in Africa - Documentary 360";
+
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto space-y-8">
@@ -18,14 +24,16 @@ const PostPage = () => {
             {title}
           </h1>
           <div className="flex items-center gap-2 mt-4">
-
-          <Avatar className="flex h-8 cursor-pointer">
-            <AvatarImage
-              src={`https://api.dicebear.com/7.x/avataaars/svg?seed=user}`}
-            />
-          </Avatar>
-          <p className="font-bold">John Doe</p>
-
+            <Avatar className="flex h-8 cursor-pointer">
+              <AvatarImage
+                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=user}`}
+              />
+            </Avatar>
+            <p className="font-bold">
+              {state?.post?.author
+                ? `${state?.post?.author?.firstName} ${state?.post?.author?.lastName}`
+                : "John Doe"}
+            </p>
           </div>
         </div>
         <div className="space-y-4">
