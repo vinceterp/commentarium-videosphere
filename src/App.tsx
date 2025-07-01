@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import VideoPage from "./pages/VideoPage";
+import PostPage from "./pages/PostPage";
 import NotFound from "./pages/NotFound";
 import SignIn from "./pages/SignIn";
 import Navbar from "./components/Navbar";
@@ -23,7 +23,7 @@ const App = () => (
         <Sonner />
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/video/:videoId" element={<VideoPage />} />
+          <Route path="/post/:postId" element={<PostPage />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="*" element={<NotFound />} />

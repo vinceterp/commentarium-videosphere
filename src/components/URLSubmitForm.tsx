@@ -1,20 +1,21 @@
+/* eslint-disable no-useless-escape */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { useCreatePostMutation } from "@/hooks/use-create-post";
 
 const URLSubmitForm = () => {
   const [url, setUrl] = useState("");
-  const navigate = useNavigate();
   const { toast } = useToast();
+  const { mutate: createPost, isPending } = useCreatePostMutation();
 
   const validateYouTubeUrl = (url: string) => {
     const regex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
     return regex.test(url);
   };
 
-  const getVideoId = (url: string) => {
+  const getPostId = (url: string) => {
     const regex =
       /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
     const match = url.match(regex);
@@ -33,9 +34,10 @@ const URLSubmitForm = () => {
       return;
     }
 
-    const videoId = getVideoId(url);
-    if (videoId) {
-      navigate(`/video/${videoId}`);
+    const postId = getPostId(url);
+    if (postId) {
+      createPost(url);
+      // navigate(`/post/${postId}`);
     }
   };
 
@@ -62,8 +64,12 @@ const URLSubmitForm = () => {
             onChange={(e) => setUrl(e.target.value)}
             className="flex-1 bg-accent"
           />
-          <Button type="submit" className="bg-secondary hover:bg-secondary/80">
-            Submit
+          <Button
+            loading={isPending}
+            type="submit"
+            className="bg-secondary hover:bg-secondary/80"
+          >
+            Create Post
           </Button>
         </div>
       </div>

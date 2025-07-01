@@ -1,13 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useSignIn } from "@/hooks/use-signin";
+import { useUser } from "@/stores/users";
 import { Eye, EyeClosed } from "lucide-react";
+import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { isAuthenticated } = useUser();
+  const navigate = useNavigate();
+
+  const { mutate: signIn } = useSignIn();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -16,8 +23,17 @@ const SignIn = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle sign in logic here
+    if (!email || !password) {
+      window.alert("Please fill in all fields");
+      return;
+    }
+    signIn({ email, password });
     console.log("Signing in with:", email);
   };
+
+  React.useEffect(() => {
+    if (isAuthenticated) navigate("/");
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="h-[calc(100vh-64px)] flex items-center justify-center p-4">
