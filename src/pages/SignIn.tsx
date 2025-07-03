@@ -14,7 +14,7 @@ const SignIn = () => {
   const { isAuthenticated } = useUser();
   const navigate = useNavigate();
 
-  const { mutate: signIn } = useSignIn();
+  const { mutate: signIn, isPending } = useSignIn();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -81,7 +81,12 @@ const SignIn = () => {
               )}
             </div>
           </div>
-          <Button type="submit" className="w-full" variant="secondary">
+          <Button
+            loading={isPending}
+            type="submit"
+            className="w-full"
+            variant="secondary"
+          >
             Continue
           </Button>
         </form>

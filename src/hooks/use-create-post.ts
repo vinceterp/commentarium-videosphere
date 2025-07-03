@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 import { useMutation } from "@tanstack/react-query";
 import api from "@/lib/axios";
 import { useToast } from "./use-toast";
@@ -6,11 +5,35 @@ import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@/stores/users";
 
-const getPostId = (url: string) => {
-  const regex =
-    /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
-  const match = url.match(regex);
-  return match ? match[1] : null;
+export const getPostId = (url: string) => {
+  try {
+    const parsedUrl = new URL(url);
+
+    // 1. Try the 'v' parameter
+    const vParam = parsedUrl.searchParams.get("v");
+    if (vParam && vParam.length === 11) {
+      return vParam;
+    }
+
+    // 2. Try youtu.be/<id> path
+    if (parsedUrl.hostname.includes("youtu.be")) {
+      const pathId = parsedUrl.pathname.split("/").filter(Boolean)[0];
+      if (pathId && pathId.length === 11) {
+        return pathId;
+      }
+    }
+
+    // 3. Try other youtube.com path patterns
+    const regex = /(?:\/(?:v|e(?:mbed)?)\/|\/watch\/|\/shorts\/)([^/?&]{11})/;
+    const match = parsedUrl.pathname.match(regex);
+    if (match && match[1]) {
+      return match[1];
+    }
+  } catch {
+    // invalid URL
+  }
+
+  return null;
 };
 
 export function useCreatePostMutation() {
