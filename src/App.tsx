@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import SignIn from "./pages/SignIn";
 import Navbar from "./components/Navbar";
 import SignUp from "./pages/SignUp";
+import { Footer } from "./components/Footer";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
+      <Footer />
     </TooltipProvider>
   </QueryClientProvider>
 );
