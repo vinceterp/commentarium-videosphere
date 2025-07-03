@@ -48,7 +48,9 @@ const PostPage = () => {
           <div className="flex items-center justify-between">
             <div className="bg-black/75 text-white px-3 py-1 rounded-full flex items-center space-x-2">
               <Eye className="h-4 w-4" />
-              <span className="text-sm font-medium">0 views</span>
+              {state?.post?.viewCount && (
+                <span className="text-sm font-medium">{`${Number(state?.post?.viewCount).toLocaleString("en-US")} views`}</span>
+              )}
             </div>
             <Button
               variant="secondary"
