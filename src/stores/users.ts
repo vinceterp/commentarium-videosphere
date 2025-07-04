@@ -31,7 +31,9 @@ export const useUser = create<UserStore>()(
       logout: () => {
         set({ user: null, isAuthenticated: false });
         // clear api default headers
-        delete api.defaults.headers.common["Authorization"];
+        localStorage.removeItem("access-token");
+        localStorage.removeItem("refresh-token");
+        // delete api.defaults.headers.common["Authorization"];
       },
     }),
     {

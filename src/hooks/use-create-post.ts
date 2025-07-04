@@ -39,7 +39,7 @@ export const getPostId = (url: string) => {
 export function useCreatePostMutation() {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { isAuthenticated } = useUser();
+  const { isAuthenticated, logout } = useUser();
   return useMutation({
     mutationKey: ["createPost"],
     mutationFn: async (originalUrl: string) => {
@@ -53,11 +53,15 @@ export function useCreatePostMutation() {
         variant: "destructive",
         title: "Post Creation Failed",
         description:
-          !isAuthenticated && error.response?.status === 403
+          !isAuthenticated || error.response?.status === 403
             ? "You must be logged in to create a post."
             : error.response?.data.message ||
               "An error occurred while creating the post.",
       });
+      if (error.response?.status === 403) {
+        logout(); // Clear user data if not authenticated
+        navigate("/signin");
+      }
     },
     onSuccess: (data) => {
       toast({
