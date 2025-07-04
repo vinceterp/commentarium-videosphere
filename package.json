@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "export PORT=8081 && vite",
-    "build": "vite build",
+    "dev": "node server",
     "build:dev": "vite build --mode development",
+    "build": "npm run build:client && npm run build:server",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "preview": "cross-env NODE_ENV=production node server",
     "format": "prettier --write ."
   },
   "dependencies": {
@@ -62,7 +62,9 @@
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.3",
     "zod": "^3.23.8",
-    "zustand": "^5.0.5"
+    "zustand": "^5.0.5",
+    "express": "^5.1.0",
+    "sirv": "^3.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

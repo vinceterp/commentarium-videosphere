@@ -65,7 +65,7 @@ const Index = () => {
                     <div className="flex flex-col md:flex-row gap-6">
                       <div className="flex-1 space-y-4">
                         <div className="aspect-video rounded-lg overflow-hidden">
-                          <Link to={postId && `/post/${postId}`}>
+                          <Link to={postId ? `/post/${postId}` : ""}>
                             <img
                               data-testid="example-thumbnail"
                               src={example.thumbnail}
