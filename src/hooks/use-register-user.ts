@@ -28,10 +28,13 @@ export function useRegisterUserMutation() {
         description: "Welcome! You have successfully registered.",
       });
 
-      setUser({ token: data.token, refreshToken: data.refreshToken, ...user }); // Set user data in store
+      const { token, refreshToken, ...userData } = data; // Destructure to get user data without tokens
+
+      setUser(userData); // Set user data in store
+      localStorage.setItem("access-token", token); // Store access token
+      localStorage.setItem("refresh-token", refreshToken); // Store refresh token
       setIsAuthenticated(true); // Set authentication state
 
-      api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`; // Set token
       navigate("/"); // Redirect to home page after successful registration
       return data;
     },

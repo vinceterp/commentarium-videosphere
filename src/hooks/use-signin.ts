@@ -24,11 +24,14 @@ export function useSignIn() {
       });
       const canGoBack = window.history.length > 2;
 
-      // Set user and authentication state
-      setUser(user);
-      setIsAuthenticated(true);
+      const { token, refreshToken, ...userData } = user;
 
-      api.defaults.headers.common["Authorization"] = `Bearer ${user.token}`;
+      localStorage.setItem("access-token", token);
+      localStorage.setItem("refresh-token", refreshToken);
+
+      // Set user and authentication state
+      setUser(userData);
+      setIsAuthenticated(true);
 
       if (canGoBack) {
         window.history.back(); // Go back to the previous page if possible

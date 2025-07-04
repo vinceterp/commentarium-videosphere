@@ -28,7 +28,6 @@ const SignIn = () => {
       return;
     }
     signIn({ email, password });
-    console.log("Signing in with:", email);
   };
 
   React.useEffect(() => {
