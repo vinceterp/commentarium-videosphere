@@ -26,7 +26,7 @@ const PostPage = () => {
           <div className="flex items-center gap-2 mt-4">
             <Avatar className="flex h-8 cursor-pointer">
               <AvatarImage
-                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=user}`}
+                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=user`}
               />
             </Avatar>
             <p className="font-bold">

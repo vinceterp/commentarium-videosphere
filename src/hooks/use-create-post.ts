@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import api from "@/lib/axios";
+import api, { CustomAxiosError } from "@/lib/axios";
 import { useToast } from "./use-toast";
-import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@/stores/users";
 
@@ -44,43 +43,39 @@ export function useCreatePostMutation() {
     mutationKey: ["createPost"],
     mutationFn: async (originalUrl: string) => {
       const { data } = await api.post("/posts", { originalUrl });
-      //   console.log("Post created:", data);
       return data;
     },
-    onError: (error: AxiosError<{ message: string }>) => {
-      console.error("Error creating post:", error);
-      toast({
-        variant: "destructive",
-        title: "Post Creation Failed",
-        description:
-          !isAuthenticated || error.response?.status === 403
-            ? "You must be logged in to create a post."
-            : error.response?.data.message ||
-              "An error occurred while creating the post.",
-      });
-      if (error.response?.status === 403) {
-        logout(); // Clear user data if not authenticated
-        navigate("/signin");
-      }
-    },
-    onSuccess: (data) => {
+    onSuccess: (response) => {
       toast({
         variant: "default",
         title: "Post Created",
         description: "Your post has been created successfully.",
       });
-      const postId = getPostId(data.originalUrl);
+      const postId = getPostId(response.data.originalUrl);
       if (postId) {
         navigate(`/post/${postId}`, {
-          state: { post: data }, // Pass the created post data to the post page
+          state: { post: response.data }, // Pass the created post data to the post page
         });
+      }
+    },
+    onError: (error: CustomAxiosError) => {
+      let description = "An error occurred while creating the post.";
+
+      if (!isAuthenticated || error.response?.status === 403) {
+        description = "You must be logged in to create a post.";
       } else {
-        toast({
-          variant: "destructive",
-          title: "Invalid URL",
-          description:
-            "The provided URL does not contain a valid YouTube video ID.",
-        });
+        description = error.response?.data?.message || description;
+      }
+
+      toast({
+        variant: "destructive",
+        title: "Post Creation Failed",
+        description,
+      });
+
+      if (error.response?.status === 403) {
+        logout(); // Clear user data if not authenticated
+        navigate("/signin");
       }
     },
   });
