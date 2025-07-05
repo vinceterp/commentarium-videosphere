@@ -8,15 +8,17 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
+import { useLogout } from "@/hooks/use-logout";
 
 const Navbar = () => {
-  const { user, isAuthenticated, logout } = useUser();
+  const { user, isAuthenticated } = useUser();
+  const { handleLogout } = useLogout();
 
   // Extensible menu items
   const menuItems = [
     {
       label: "Logout",
-      onClick: logout,
+      onClick: handleLogout,
     },
     // Add more items here as needed
   ];

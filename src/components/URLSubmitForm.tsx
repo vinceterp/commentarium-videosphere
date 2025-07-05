@@ -8,7 +8,7 @@ import { useCreatePostMutation } from "@/hooks/use-create-post";
 const URLSubmitForm = () => {
   const [url, setUrl] = useState("");
   const { toast } = useToast();
-  const { mutate: createPost, isPending } = useCreatePostMutation();
+  const { mutate: createPost, isPending } = useCreatePostMutation(url);
 
   const validateYouTubeUrl = (url: string) => {
     const regex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
@@ -36,7 +36,7 @@ const URLSubmitForm = () => {
 
     const postId = getPostId(url);
     if (postId) {
-      createPost(url);
+      createPost();
       // navigate(`/post/${postId}`);
     }
   };

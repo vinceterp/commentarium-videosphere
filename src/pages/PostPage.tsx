@@ -8,6 +8,7 @@ const PostPage = () => {
   const { postId } = useParams();
   const thumbnailUrl = `https://img.youtube.com/vi/${postId}/maxresdefault.jpg`;
   const videoUrl = `https://www.youtube.com/watch?v=${postId}`;
+  console.log("Post ID:", postId);
 
   // TODO: Fetch post data from API Only instead of using router state
   const { state } = useLocation();

@@ -35,13 +35,13 @@ export const getPostId = (url: string) => {
   return null;
 };
 
-export function useCreatePostMutation() {
+export function useCreatePostMutation(originalUrl: string) {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { isAuthenticated, logout } = useUser();
   return useMutation({
     mutationKey: ["createPost"],
-    mutationFn: async (originalUrl: string) => {
+    mutationFn: async () => {
       const { data } = await api.post("/posts", { originalUrl });
       return data;
     },
@@ -76,6 +76,11 @@ export function useCreatePostMutation() {
       if (error.response?.status === 403) {
         logout(); // Clear user data if not authenticated
         navigate("/signin");
+      } else if (description.includes("already exists")) {
+        const postId = getPostId(originalUrl);
+        if (postId) {
+          navigate(`/post/${postId}`);
+        }
       }
     },
   });
