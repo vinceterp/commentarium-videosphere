@@ -8,6 +8,7 @@ const PostPage = () => {
   const { postId } = useParams();
   const thumbnailUrl = `https://img.youtube.com/vi/${postId}/maxresdefault.jpg`;
   const videoUrl = `https://www.youtube.com/watch?v=${postId}`;
+  console.log("Post ID:", postId);
 
   // TODO: Fetch post data from API Only instead of using router state
   const { state } = useLocation();
@@ -26,7 +27,7 @@ const PostPage = () => {
           <div className="flex items-center gap-2 mt-4">
             <Avatar className="flex h-8 cursor-pointer">
               <AvatarImage
-                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=user}`}
+                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=user`}
               />
             </Avatar>
             <p className="font-bold">

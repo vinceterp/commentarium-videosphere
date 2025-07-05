@@ -1,10 +1,12 @@
-import axios, { AxiosRequestHeaders } from "axios";
+import axios, { AxiosError, AxiosRequestHeaders } from "axios";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? ""; // Change this to your API base URL
 
 const api = axios.create({
   baseURL: BASE_URL,
 });
+
+export type CustomAxiosError = AxiosError<{ message: string }>;
 
 const refreshTokenFn = async () => {
   console.log("Refreshing token...");
@@ -43,10 +45,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    // set the Authorization header with the refreshToken from the local storage user store
-
     const originalRequest = error.config;
-    console.error("API Error:", error);
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
