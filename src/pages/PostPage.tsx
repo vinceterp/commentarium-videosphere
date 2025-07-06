@@ -102,7 +102,11 @@ const PostPage = () => {
         </div>
 
         <div className="space-y-8">
-          {isLoading ? <p>{"Loading..."}</p> : <CommentSection />}
+          {isLoading ? (
+            <p>{"Loading..."}</p>
+          ) : (
+            <CommentSection postId={post?.id} />
+          )}
         </div>
       </div>
     </div>

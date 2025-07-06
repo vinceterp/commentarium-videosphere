@@ -1,16 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ThumbsUp, MessageSquare, Edit2, Check, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { formatDate } from "@/lib/utils";
 
 export interface CommentType {
-  id: string;
+  id: number;
   content: string;
-  likes: number;
+  likeCount: number;
   replies: CommentType[];
-  author: string;
-  timestamp: string;
+  author: any;
+  createdAt: string;
 }
 
 interface CommentProps {
@@ -18,9 +20,20 @@ interface CommentProps {
   depth?: number;
 }
 
+// Recursively format createdAt for comment and all replies
+function formatCommentDates(comment: CommentType): CommentType {
+  return {
+    ...comment,
+    createdAt: formatDate(comment.createdAt),
+    replies: comment.replies.map(formatCommentDates),
+  };
+}
+
 const Comment = ({ comment, depth = 0 }: CommentProps) => {
+  // Format the comment and all nested replies
+  const formattedComment = formatCommentDates(comment);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedContent, setEditedContent] = useState(comment.content);
+  const [editedContent, setEditedContent] = useState(formattedComment.content);
   const [isLiked, setIsLiked] = useState(false);
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [replyContent, setReplyContent] = useState("");
@@ -38,7 +51,7 @@ const Comment = ({ comment, depth = 0 }: CommentProps) => {
   };
 
   const handleCancelEdit = () => {
-    setEditedContent(comment.content);
+    setEditedContent(formattedComment.content);
     setIsEditing(false);
   };
 
@@ -56,18 +69,18 @@ const Comment = ({ comment, depth = 0 }: CommentProps) => {
           <div className="flex items-center gap-3">
             <Avatar className="h-8 w-8">
               <AvatarImage
-                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${comment.author}`}
+                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${formattedComment.author}`}
               />
               <AvatarFallback>
-                {comment.author.slice(0, 2).toUpperCase()}
+                {formattedComment.author?.username?.slice(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col items-start">
               <span className="font-semibold text-secondary">
-                {comment.author}
+                {formattedComment.author?.username || "Anonymous"}
               </span>
               <span className="text-xs text-muted-foreground">
-                {comment.timestamp}
+                {formattedComment.createdAt}
               </span>
             </div>
           </div>
@@ -93,7 +106,7 @@ const Comment = ({ comment, depth = 0 }: CommentProps) => {
             </div>
           </div>
         ) : (
-          <p className="text-foreground">{comment.content}</p>
+          <p className="text-foreground">{formattedComment.content}</p>
         )}
 
         <div className="flex items-center gap-4 pt-2">
@@ -104,7 +117,7 @@ const Comment = ({ comment, depth = 0 }: CommentProps) => {
             onClick={handleLike}
           >
             <ThumbsUp className="h-4 w-4" />
-            {comment.likes + (isLiked ? 1 : 0)}
+            {formattedComment.likeCount + (isLiked ? 1 : 0)}
           </Button>
           <Button
             variant="ghost"
@@ -141,7 +154,7 @@ const Comment = ({ comment, depth = 0 }: CommentProps) => {
         )}
       </div>
 
-      {comment.replies.map((reply) => (
+      {formattedComment.replies.map((reply) => (
         <Comment key={reply.id} comment={reply} depth={depth + 1} />
       ))}
     </div>
