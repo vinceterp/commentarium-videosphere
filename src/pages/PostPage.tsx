@@ -11,11 +11,9 @@ const PostPage = () => {
   const navigate = useNavigate();
   const thumbnailUrl = `https://img.youtube.com/vi/${postId}/maxresdefault.jpg`;
   const videoUrl = `https://www.youtube.com/watch?v=${postId}`;
-  console.log("Post ID:", postId);
 
   // TODO: Fetch post data from API Only instead of using router state
   const { data: post, isLoading, error } = useGetPostQuery(postId);
-  console.log("Post data:", post);
 
   if (error) {
     navigate("/404");

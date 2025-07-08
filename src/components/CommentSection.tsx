@@ -3,6 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import Comment, { CommentType } from "./Comment";
 import { useGetCommentsQuery } from "@/hooks/use-get-comments";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+} from "@/components/ui/tooltip";
+import { useUser } from "@/stores/users";
+import { useCreateCommentMutation } from "@/hooks/use-create-comment";
 
 interface CommentSectionProps {
   postId: string;
@@ -16,12 +24,16 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
 
+  const { mutate: createComment } = useCreateCommentMutation(postId);
+
   const {
     data: initialComments,
     isLoading,
     refetch,
     isRefetching,
   } = useGetCommentsQuery(postId, page, COMMENTS_PER_PAGE);
+
+  const isAuthenticated = useUser((state) => state.isAuthenticated);
 
   useEffect(() => {
     if (initialComments) {
@@ -50,36 +62,44 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
     setPage((prev) => prev + 1);
   };
 
-  // const handleSubmitComment = (e: React.FormEvent) => {
-  //   // e.preventDefault();
-  //   // if (!newComment.trim()) return;
-
-  //   // const comment: CommentType = {
-  //   //   id: Date.now().toString(),
-  //   //   content: newComment,
-  //   //   likes: 0,
-  //   //   author: "You",
-  //   //   timestamp: "Just now",
-  //   //   replies: [],
-  //   // };
-
-  //   // setComments([comment, ...comments]);
-  //   // setNewComment("");
-  // };
+  const handleSubmitComment = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newComment.trim()) return;
+    createComment(newComment);
+    setNewComment("");
+  };
 
   return (
     <div className="space-y-6">
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmitComment}>
         <Textarea
           placeholder="Add a comment..."
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           className="min-h-[100px] bg-accent"
+          disabled={!isAuthenticated}
         />
         <div className="flex justify-end">
-          <Button type="submit" className="bg-secondary hover:bg-secondary/80">
-            Post Comment
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span>
+                  <Button
+                    type="submit"
+                    className="bg-secondary hover:bg-secondary/80"
+                    disabled={!isAuthenticated}
+                  >
+                    Post Comment
+                  </Button>
+                </span>
+              </TooltipTrigger>
+              {!isAuthenticated && (
+                <TooltipContent side="top">
+                  Login to leave a comment
+                </TooltipContent>
+              )}
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </form>
 
