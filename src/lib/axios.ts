@@ -1,4 +1,7 @@
+import { QueryClient } from "@tanstack/react-query";
 import axios, { AxiosError, AxiosRequestHeaders } from "axios";
+
+export const queryClient = new QueryClient();
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? ""; // Change this to your API base URL
 

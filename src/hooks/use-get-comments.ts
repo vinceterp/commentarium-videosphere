@@ -12,7 +12,7 @@ export function useGetCommentsQuery(
       const {
         data: { data },
       } = await api.get(
-        `/comments?postId=${postId}&page=${page}&size=${pageSize}`,
+        `/comments?postId=${postId}&page=${page}&size=${pageSize}&sort=createdAt,desc`,
       );
       return data;
     },

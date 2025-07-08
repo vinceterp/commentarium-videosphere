@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import PostPage from "./pages/PostPage";
@@ -10,8 +10,7 @@ import SignIn from "./pages/SignIn";
 import Navbar from "./components/Navbar";
 import SignUp from "./pages/SignUp";
 import { Footer } from "./components/Footer";
-
-const queryClient = new QueryClient();
+import { queryClient } from "./lib/axios";
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
