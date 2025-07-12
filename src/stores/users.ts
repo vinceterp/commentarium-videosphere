@@ -18,7 +18,7 @@ export interface UserStore {
   setUser: (user: User | null) => void;
   isAuthenticated: boolean;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
-  logout: () => void;
+  logout: (navigateToLogin?: boolean) => void;
 }
 
 export const useUser = create<UserStore>()(
@@ -28,12 +28,16 @@ export const useUser = create<UserStore>()(
       setUser: (user) => set({ user }),
       isAuthenticated: false,
       setIsAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
-      logout: () => {
+      logout: (navigateToLogin = true) => {
         set({ user: null, isAuthenticated: false });
         // clear api default headers
         localStorage.removeItem("access-token");
         localStorage.removeItem("refresh-token");
         // delete api.defaults.headers.common["Authorization"];
+        if (navigateToLogin) {
+          // Redirect to login page if needed
+          window.location.href = "/signin";
+        }
       },
     }),
     {
