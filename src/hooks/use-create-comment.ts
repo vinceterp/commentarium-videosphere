@@ -2,20 +2,27 @@ import { useMutation } from "@tanstack/react-query";
 import api, { CustomAxiosError, queryClient } from "@/lib/axios";
 import { useToast } from "./use-toast";
 import { useUser } from "@/stores/users";
+import { useLogout } from "./use-logout";
+
+export type CreateCommentVars = {
+  content: string;
+  parentCommentId?: number;
+};
 
 export function useCreateCommentMutation(postId: string) {
   const { toast } = useToast();
   const { isAuthenticated, logout } = useUser();
+  const { handleLogout } = useLogout();
 
   return useMutation({
     mutationKey: ["createComment", postId],
-    mutationFn: async (commentText: string) => {
+    mutationFn: async ({ content, parentCommentId }: CreateCommentVars) => {
       if (!isAuthenticated) {
         throw new Error("User not authenticated");
       }
       const {
         data: { data },
-      } = await api.post(`/comments`, { postId, content: commentText });
+      } = await api.post(`/comments`, { postId, content, parentCommentId });
 
       return data;
     },
@@ -30,8 +37,8 @@ export function useCreateCommentMutation(postId: string) {
       });
     },
     onError: (error: CustomAxiosError) => {
-      if (error.response?.status === 401) {
-        logout();
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        handleLogout(true);
       } else {
         toast({
           variant: "destructive",

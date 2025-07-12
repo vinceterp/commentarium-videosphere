@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ThumbsUp, MessageSquare, Edit2, Check, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatDate } from "@/lib/utils";
+import { CreateCommentVars } from "@/hooks/use-create-comment";
 
 export interface CommentType {
   id: number;
@@ -18,9 +19,10 @@ export interface CommentType {
 interface CommentProps {
   comment: CommentType;
   depth?: number;
+  createComment: ({ content, parentCommentId }: CreateCommentVars) => void;
 }
 
-const Comment = ({ comment, depth = 0 }: CommentProps) => {
+const Comment = ({ comment, depth = 0, createComment }: CommentProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(comment.content);
   const [isLiked, setIsLiked] = useState(false);
@@ -47,6 +49,10 @@ const Comment = ({ comment, depth = 0 }: CommentProps) => {
   const handleReply = () => {
     setShowReplyForm(false);
     setReplyContent("");
+    createComment({
+      content: replyContent,
+      parentCommentId: comment.id,
+    });
   };
 
   return (
@@ -144,7 +150,12 @@ const Comment = ({ comment, depth = 0 }: CommentProps) => {
       </div>
 
       {comment.replies.map((reply) => (
-        <Comment key={reply.id} comment={reply} depth={depth + 1} />
+        <Comment
+          key={reply.id}
+          comment={reply}
+          depth={depth + 1}
+          createComment={createComment}
+        />
       ))}
     </div>
   );

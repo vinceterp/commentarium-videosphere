@@ -36,7 +36,7 @@ const examples = [
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 gap-12">
+    <div className=" flex flex-col items-center justify-center m-4 gap-12">
       <h1 className="text-4xl font-bold text-center animate-fade-in pt-8">
         Hidden comments? Start the discussion you weren't meant to 🗣️
       </h1>
@@ -45,7 +45,7 @@ const Index = () => {
         <URLSubmitForm />
       </div>
 
-      <div className="w-full">
+      <div className="w-screen mx-[-32px]">
         <Carousel
           opts={{
             align: "center",
@@ -56,11 +56,11 @@ const Index = () => {
           }}
           className="w-full"
         >
-          <CarouselContent className="-ml-[8%]">
+          <CarouselContent>
             {examples.map((example, index) => {
               const postId = getPostId(example.url);
               return (
-                <CarouselItem key={index} className="pl-[5%] basis-[80%]">
+                <CarouselItem key={index} className=" basis-[80%]">
                   <div className="glass-morphism p-6 rounded-lg h-full">
                     <div className="flex flex-col md:flex-row gap-6">
                       <div className="flex-1 space-y-4">

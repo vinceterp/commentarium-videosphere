@@ -35,7 +35,7 @@ const SignIn = () => {
   }, [isAuthenticated, navigate]);
 
   return (
-    <div className="h-[calc(100vh-64px)] flex items-center justify-center p-4">
+    <div className="h-[calc(100vh-256px)] flex items-center justify-center p-4">
       <div className="glass-morphism p-8 rounded-lg w-full max-w-md space-y-6">
         <h1 className="text-2xl font-bold text-center">Sign In</h1>
         <form onSubmit={handleSubmit} className="space-y-4">

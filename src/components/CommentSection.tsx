@@ -65,7 +65,7 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
   const handleSubmitComment = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newComment.trim()) return;
-    createComment(newComment);
+    createComment({ content: newComment });
     setNewComment("");
   };
 
@@ -107,7 +107,11 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
         {comments &&
           comments.length > 0 &&
           comments.map((comment) => (
-            <Comment key={comment.id} comment={comment} />
+            <Comment
+              key={comment.id}
+              comment={comment}
+              createComment={createComment}
+            />
           ))}
       </div>
 

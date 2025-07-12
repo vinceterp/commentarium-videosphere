@@ -3,6 +3,7 @@ import api, { CustomAxiosError } from "@/lib/axios";
 import { useToast } from "./use-toast";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@/stores/users";
+import { useLogout } from "./use-logout";
 
 export const getPostId = (url: string) => {
   try {
@@ -38,7 +39,9 @@ export const getPostId = (url: string) => {
 export function useCreatePostMutation(originalUrl: string) {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { isAuthenticated, logout } = useUser();
+  const { isAuthenticated } = useUser();
+  const { handleLogout } = useLogout();
+
   return useMutation({
     mutationKey: ["createPost"],
     mutationFn: async () => {
@@ -74,8 +77,7 @@ export function useCreatePostMutation(originalUrl: string) {
       });
 
       if (error.response?.status === 403) {
-        logout(); // Clear user data if not authenticated
-        navigate("/signin");
+        handleLogout(); // Clear user data if not authenticated
       } else if (description.includes("already exists")) {
         const postId = getPostId(originalUrl);
         if (postId) {
