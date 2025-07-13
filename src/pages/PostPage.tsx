@@ -26,13 +26,13 @@ const PostPage = () => {
           <h1 className="text-2xl font-bold text-start animate-fade-in">
             {isLoading ? "Loading..." : post?.title}
           </h1>
-          <div className="flex items-center justify-between  gap-2 mt-4">
+          <div className="flex items-center justify-between gap-16 mt-4">
             <div className="flex items-center gap-2">
               {isLoading ? (
                 <p className="font-bold">{"Loading..."}</p>
               ) : (
                 <>
-                  <Avatar className="flex h-8 cursor-pointer">
+                  <Avatar className="flex h-8 w-8 cursor-pointer">
                     <AvatarImage
                       src={`https://api.dicebear.com/7.x/avataaars/svg?seed=user`}
                     />
@@ -45,30 +45,29 @@ const PostPage = () => {
                 </>
               )}
             </div>
-            {
-              <span className="text-md text-gray-100">
-                {isLoading ? (
-                  <>{"Loading..."}</>
-                ) : (
-                  <>
-                    {"Posted on "}
-                    {new Date(post?.createdAt).toLocaleDateString("en-US", {
-                      month: "long",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                    {post?.createdAt &&
-                      ` at ${new Date(post?.createdAt).toLocaleTimeString(
-                        "en-US",
-                        {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        },
-                      )}`}
-                  </>
-                )}
-              </span>
-            }
+
+            <span className="text-md text-gray-100 text-right">
+              {isLoading ? (
+                <>{"Loading..."}</>
+              ) : (
+                <>
+                  {"Posted on "}
+                  {new Date(post?.createdAt).toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                  {post?.createdAt &&
+                    ` at ${new Date(post?.createdAt).toLocaleTimeString(
+                      "en-US",
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      },
+                    )}`}
+                </>
+              )}
+            </span>
           </div>
         </div>
         <div className="space-y-4">

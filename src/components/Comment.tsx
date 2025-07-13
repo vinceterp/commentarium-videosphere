@@ -2,11 +2,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ThumbsUp, MessageSquare, Edit2, Check, X } from "lucide-react";
+import { ThumbsUp, MessageSquare, Edit2, Check, X, Trash2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatDate } from "@/lib/utils";
 import { CreateCommentVars } from "@/hooks/use-create-comment";
 import { useUser } from "@/stores/users";
+import { useDeleteCommentMutation } from "@/hooks/use-delete-comment";
+import { useUpdateCommentMutation } from "@/hooks/use-update-comment";
 
 export interface CommentType {
   id: number;
@@ -29,6 +31,25 @@ const Comment = ({ comment, depth = 0, createComment }: CommentProps) => {
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [replyContent, setReplyContent] = useState("");
   const { user } = useUser();
+  const { mutate: deleteComment } = useDeleteCommentMutation();
+  const { mutate: updateComment } = useUpdateCommentMutation();
+
+  const handleDelete = () => {
+    deleteComment({ commentId: comment.id });
+  };
+
+  const handleLike = () => {
+    if (isLiked) {
+      updateComment({
+        commentId: comment.id,
+        unlikedBy: user?.userId,
+      });
+    }
+    updateComment({
+      commentId: comment.id,
+      likedBy: isLiked ? undefined : user?.userId,
+    });
+  };
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -36,6 +57,10 @@ const Comment = ({ comment, depth = 0, createComment }: CommentProps) => {
 
   const handleSaveEdit = () => {
     setIsEditing(false);
+    updateComment({
+      commentId: comment.id,
+      content: editedContent,
+    });
   };
 
   const handleCancelEdit = () => {
@@ -78,11 +103,18 @@ const Comment = ({ comment, depth = 0, createComment }: CommentProps) => {
               </span>
             </div>
           </div>
-          {comment.author?.id === user?.userId && (
-            <Button variant="ghost" size="icon" onClick={handleEdit}>
-              <Edit2 className="h-4 w-4" />
-            </Button>
-          )}
+          <div className="flex items-center gap-2">
+            {comment.author?.id === user?.userId && (
+              <Button variant="ghost" size="icon" onClick={handleEdit}>
+                <Edit2 className="h-4 w-4" />
+              </Button>
+            )}
+            {comment.author?.id === user?.userId && (
+              <Button variant="destructive" size="icon" onClick={handleDelete}>
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
         </div>
 
         {isEditing ? (
@@ -90,7 +122,7 @@ const Comment = ({ comment, depth = 0, createComment }: CommentProps) => {
             <Textarea
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
-              className="min-h-[100px] bg-accent"
+              className="min-h-[100px] max-h-[256px] bg-accent"
             />
             <div className="flex justify-end gap-2">
               <Button size="sm" onClick={handleSaveEdit}>
@@ -110,7 +142,7 @@ const Comment = ({ comment, depth = 0, createComment }: CommentProps) => {
             variant="ghost"
             size="sm"
             className={`gap-2 ${isLiked ? "text-secondary" : ""}`}
-            // onClick={handleLike}
+            onClick={handleLike}
           >
             <ThumbsUp className="h-4 w-4" />
             {comment?.likes?.length || 0}
@@ -132,7 +164,7 @@ const Comment = ({ comment, depth = 0, createComment }: CommentProps) => {
               placeholder="Write a reply..."
               value={replyContent}
               onChange={(e) => setReplyContent(e.target.value)}
-              className="min-h-[100px] bg-accent"
+              className="min-h-[100px] bg-accent text-md"
             />
             <div className="flex justify-end gap-2">
               <Button size="sm" onClick={handleReply}>

@@ -76,7 +76,7 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
           placeholder="Add a comment..."
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
-          className="min-h-[100px] bg-accent"
+          className="min-h-[100px] max-h-[256px] bg-accent text-md text-gray-100"
           disabled={!isAuthenticated}
         />
         <div className="flex justify-end">
