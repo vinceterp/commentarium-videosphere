@@ -6,11 +6,12 @@ import { ThumbsUp, MessageSquare, Edit2, Check, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatDate } from "@/lib/utils";
 import { CreateCommentVars } from "@/hooks/use-create-comment";
+import { useUser } from "@/stores/users";
 
 export interface CommentType {
   id: number;
   content: string;
-  likeCount: number;
+  likes: number[];
   replies: CommentType[];
   author: any;
   createdAt: string;
@@ -25,13 +26,9 @@ interface CommentProps {
 const Comment = ({ comment, depth = 0, createComment }: CommentProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(comment.content);
-  const [isLiked, setIsLiked] = useState(false);
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [replyContent, setReplyContent] = useState("");
-
-  const handleLike = () => {
-    setIsLiked(!isLiked);
-  };
+  const { user } = useUser();
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -54,6 +51,8 @@ const Comment = ({ comment, depth = 0, createComment }: CommentProps) => {
       parentCommentId: comment.id,
     });
   };
+
+  const isLiked = comment.likes.includes(user?.userId || 0) || false;
 
   return (
     <div
@@ -79,9 +78,11 @@ const Comment = ({ comment, depth = 0, createComment }: CommentProps) => {
               </span>
             </div>
           </div>
-          <Button variant="ghost" size="icon" onClick={handleEdit}>
-            <Edit2 className="h-4 w-4" />
-          </Button>
+          {comment.author?.id === user?.userId && (
+            <Button variant="ghost" size="icon" onClick={handleEdit}>
+              <Edit2 className="h-4 w-4" />
+            </Button>
+          )}
         </div>
 
         {isEditing ? (
@@ -109,10 +110,10 @@ const Comment = ({ comment, depth = 0, createComment }: CommentProps) => {
             variant="ghost"
             size="sm"
             className={`gap-2 ${isLiked ? "text-secondary" : ""}`}
-            onClick={handleLike}
+            // onClick={handleLike}
           >
             <ThumbsUp className="h-4 w-4" />
-            {comment.likeCount + (isLiked ? 1 : 0)}
+            {comment?.likes?.length || 0}
           </Button>
           <Button
             variant="ghost"

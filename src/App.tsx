@@ -16,7 +16,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Navbar />
-      <div className="pt-16 overflow-x-hidden">
+      <div className="pt-16">
         {" "}
         {/* Add padding to account for fixed navbar */}
         <Toaster />
