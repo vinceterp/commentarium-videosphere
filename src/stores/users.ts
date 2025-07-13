@@ -11,6 +11,7 @@ export interface User {
   image?: string;
   token: string;
   refreshToken: string;
+  userId?: number;
 }
 
 export interface UserStore {
