@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/stores/users";
-import { Sun, User } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Sun, User, LogOut } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import {
   Popover,
@@ -10,17 +10,39 @@ import {
 } from "@/components/ui/popover";
 import { useLogout } from "@/hooks/use-logout";
 
+type ListItem = {
+  label: string;
+  onClick: () => void;
+  icon?: React.ReactNode | null;
+};
+
 const Navbar = () => {
   const { user, isAuthenticated } = useUser();
   const { handleLogout } = useLogout();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const hideSignIn =
     location.pathname === "/signin" || location.pathname === "/signup";
 
   // Extensible menu items
-  const menuItems = [
+  const menuItems: ListItem[] = [
     {
+      label: "Profile",
+      onClick: () => {
+        // Navigate to profile page
+        navigate(`/profile`);
+      },
+    },
+    {
+      label: "Settings",
+      onClick: () => {
+        // Navigate to settings page
+        navigate(`/settings`);
+      },
+    },
+    {
+      icon: <LogOut className="h-4 w-4" />,
       label: "Logout",
       onClick: () => handleLogout(false),
     },
@@ -28,7 +50,10 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-morphism shadow-lg" style={{borderWidth: 0}}>
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 glass-morphism shadow-lg"
+      style={{ borderWidth: 0 }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="text-2xl font-bold">
@@ -57,7 +82,7 @@ const Navbar = () => {
                       />
                     </Avatar>
                   </PopoverTrigger>
-                  <PopoverContent className="w-48 p-2 border-0 bg-secondary shadow-lg m-2">
+                  <PopoverContent className="glass-morphism w-48 p-2 border-0 shadow-lg m-2">
                     <div className="flex flex-col gap-2">
                       {menuItems.map((item, idx) => (
                         <Button
@@ -66,6 +91,9 @@ const Navbar = () => {
                           className="justify-start w-full bg-secondary hover:bg-secondary/80 text-secondary-foreground"
                           onClick={item.onClick}
                         >
+                          {item.icon && (
+                            <span className="mr-2">{item.icon}</span>
+                          )}
                           {item.label}
                         </Button>
                       ))}

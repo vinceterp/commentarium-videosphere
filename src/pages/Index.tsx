@@ -53,6 +53,7 @@ const Index = () => {
             skipSnaps: false,
             duration: 20,
             dragFree: false,
+            autoScroll: true,
           }}
           className="w-full"
         >
