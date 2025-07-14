@@ -41,13 +41,15 @@ export function useSignIn() {
 
       return user;
     },
-    onError: (error: AxiosError<{ message: string }>) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onError: (error: any) => {
       toast({
         variant: "destructive",
         title: "Log in Failed",
         description:
-          error.response.data.message || "An error occurred during login.",
+          error?.response?.data?.message || "An error occurred during login.",
       });
     },
+    retry: false, // Disable automatic retries
   });
 }

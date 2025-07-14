@@ -44,11 +44,12 @@ const Comment = ({ comment, depth = 0, createComment }: CommentProps) => {
         commentId: comment.id,
         unlikedBy: user?.userId,
       });
+    } else {
+      updateComment({
+        commentId: comment.id,
+        likedBy: isLiked ? undefined : user?.userId,
+      });
     }
-    updateComment({
-      commentId: comment.id,
-      likedBy: isLiked ? undefined : user?.userId,
-    });
   };
 
   const handleEdit = () => {
