@@ -15,7 +15,7 @@ const refreshTokenFn = async () => {
   console.log("Refreshing token...");
   const refreshToken = localStorage.getItem("refresh-token");
   if (!refreshToken) {
-    throw new Error("No refresh token found");
+    return;
   }
   try {
     const uninterceptedApi = axios.create({
@@ -49,6 +49,11 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    if (!originalRequest._retry) {
+      originalRequest._retry = true; // Prevent infinite loop
+    } else {
+      return Promise.reject(error);
+    }
     if (error.response && error.response.status === 404) {
       return Promise.reject(error);
     }
