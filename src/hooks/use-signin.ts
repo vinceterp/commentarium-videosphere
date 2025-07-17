@@ -1,7 +1,6 @@
 import api from "@/lib/axios";
 import { useUser } from "@/stores/users";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { useToast } from "./use-toast";
 

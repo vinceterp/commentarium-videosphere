@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar";
 import SignUp from "./pages/SignUp";
 import { Footer } from "./components/Footer";
 import { queryClient } from "./lib/axios";
+import EmailVerification from "./pages/EmailVerification";
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/post/:postId" element={<PostPage />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/verify-email" element={<EmailVerification />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

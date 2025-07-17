@@ -25,17 +25,18 @@ export function useRegisterUserMutation() {
       toast({
         variant: "default",
         title: "Registration Successful",
-        description: "Welcome! You have successfully registered.",
+        description: "Please verify your email address to continue.",
       });
 
       const { token, refreshToken, ...userData } = data; // Destructure to get user data without tokens
 
       setUser(userData); // Set user data in store
-      localStorage.setItem("access-token", token); // Store access token
-      localStorage.setItem("refresh-token", refreshToken); // Store refresh token
-      setIsAuthenticated(true); // Set authentication state
+      // localStorage.setItem("access-token", token); // Store access token
+      // localStorage.setItem("refresh-token", refreshToken); // Store refresh token
 
-      navigate("/"); // Redirect to home page after successful registration
+      // setIsAuthenticated(true); // Set authentication state
+
+      navigate("/verify-email"); // Redirect to home page after successful registration
       return data;
     },
     onError: (error: AxiosError<{ message: string }>) => {

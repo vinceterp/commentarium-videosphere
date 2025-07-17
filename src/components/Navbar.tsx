@@ -14,6 +14,7 @@ type ListItem = {
   label: string;
   onClick: () => void;
   icon?: React.ReactNode | null;
+  disabled?: boolean;
 };
 
 const Navbar = () => {
@@ -23,22 +24,26 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const hideSignIn =
-    location.pathname === "/signin" || location.pathname === "/signup";
+    location.pathname === "/signin" ||
+    location.pathname === "/signup" ||
+    location.pathname === "/verify-email";
 
   // Extensible menu items
   const menuItems: ListItem[] = [
     {
-      label: "Profile",
+      label: "Profile (coming soon)",
+      disabled: true,
       onClick: () => {
         // Navigate to profile page
         navigate(`/profile`);
       },
     },
     {
-      label: "Settings",
+      label: "Activity (coming soon)",
+      disabled: true,
       onClick: () => {
         // Navigate to settings page
-        navigate(`/settings`);
+        navigate(`/activity`);
       },
     },
     {
@@ -90,6 +95,7 @@ const Navbar = () => {
                           variant="secondary"
                           className="justify-start w-full bg-secondary hover:bg-secondary/80 text-secondary-foreground"
                           onClick={item.onClick}
+                          disabled={item.disabled}
                         >
                           {item.icon && (
                             <span className="mr-2">{item.icon}</span>

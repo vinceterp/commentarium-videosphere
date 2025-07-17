@@ -14,23 +14,31 @@ const examples = [
     url: "https://www.youtube.com/watch?v=34woI_H3nTc",
     thumbnail: "https://img.youtube.com/vi/34woI_H3nTc/maxresdefault.jpg",
     comments: [
-      "Breathtaking views!",
-      "Nature at its finest",
-      "Amazing footage!",
+      "Fascinating perspective. I never realized how many Chinese entrepreneurs were starting new lives and businesses in Africa. The cultural exchange is complex but captivating.",
+      "This documentary highlights a side of globalization we rarely see—how opportunity flows both ways between China and Africa. Eye-opening and well-produced!",
+      "So many layers to this story—economic ambition, cultural clash, cooperation, and tension. Glad this documentary didn’t shy away from the nuance.",
     ],
   },
   {
-    title: "Can Our Cities Survive the Heat?",
-    url: "https://www.youtube.com/watch?v=qtinSxbRJV8&t=10s",
-    thumbnail: "https://img.youtube.com/vi/qtinSxbRJV8/maxresdefault.jpg",
-    comments: ["Mind-blowing!", "Space is fascinating", "Can't wait for more!"],
+    title:
+      'The "Voiceless Knights" Delivering Food: Chengdu, China - Asia Insight',
+    url: "https://www.youtube.com/watch?v=NDKd5l297vc",
+    thumbnail: "https://img.youtube.com/vi/NDKd5l297vc/maxresdefault.jpg",
+    comments: [
+      "This was incredibly moving. It’s amazing how these deaf delivery workers are navigating such a fast-paced city with strength and grace. Truly inspiring!",
+      "I had no idea Chengdu had initiatives like this to empower the deaf community. Respect to the ‘Voiceless Knights’—they’re modern-day heroes.",
+      "Beautiful storytelling. This video shows how resilience and community support can break down barriers. Thank you for shedding light on this!",
+    ],
   },
   {
-    title:
-      "The Best Fried Chicken Wings You'll Ever Make! You will cook it again & again!!!🔥😲 | 2 RECIPES",
-    url: "https://www.youtube.com/watch?v=w8Y_uGGt_88",
-    thumbnail: "https://img.youtube.com/vi/w8Y_uGGt_88/maxresdefault.jpg",
-    comments: ["Great recipe!", "Thanks for sharing", "Will try this weekend"],
+    title: "The Surge in South Korea's Foreign Workers - Asia Insight",
+    url: "https://www.youtube.com/watch?v=yx7uozK8POs",
+    thumbnail: "https://img.youtube.com/vi/yx7uozK8POs/maxresdefault.jpg",
+    comments: [
+      "This really opened my eyes. I had no idea South Korea was relying so heavily on foreign labor. It’s a reminder of how interconnected global economies are becoming.",
+      "Respect to these workers who are filling crucial roles and contributing to Korea’s economy, often under tough conditions. Their stories deserve to be heard more widely.",
+      "Great documentary. It’s interesting to see how a traditionally homogeneous society is adapting to an influx of foreign workers—both the challenges and opportunities.",
+    ],
   },
 ];
 
