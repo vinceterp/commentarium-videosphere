@@ -148,15 +148,17 @@ const Comment = ({ comment, depth = 0, createComment }: CommentProps) => {
             <ThumbsUp className="h-4 w-4" />
             {comment?.likes?.length || 0}
           </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="gap-2"
-            onClick={() => setShowReplyForm(!showReplyForm)}
-          >
-            <MessageSquare className="h-4 w-4" />
-            Reply
-          </Button>
+          {depth === 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-2"
+              onClick={() => setShowReplyForm(!showReplyForm)}
+            >
+              <MessageSquare className="h-4 w-4" />
+              Reply
+            </Button>
+          )}
         </div>
 
         {showReplyForm && (

@@ -5,16 +5,29 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@/stores/users";
+import { CircleCheck, Eye, EyeClosed } from "lucide-react";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
   const { isAuthenticated } = useUser();
+
+  const isPasswordLengthValid = password.length >= 8;
+  const isPasswordContainsNumber = /\d/.test(password);
+  const isPasswordContainsSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  const passwordValid =
+    isPasswordContainsNumber &&
+    isPasswordContainsSpecialChar &&
+    isPasswordLengthValid;
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const { mutate, isPending } = useRegisterUserMutation();
 
@@ -117,26 +130,52 @@ const SignUp = () => {
               <div className="flex items-center relative">
                 <Input
                   id="password"
-                  type={"password"}
+                  type={showPassword ? "text" : "password"}
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   className="w-full"
                 />
-                {/* {!showPassword ? (
-                <EyeClosed
-                  size={16}
-                  className="absolute right-3 cursor-pointer"
-                  onClick={togglePasswordVisibility}
+                {!showPassword ? (
+                  <EyeClosed
+                    size={16}
+                    className="absolute right-3 cursor-pointer"
+                    onClick={togglePasswordVisibility}
+                  />
+                ) : (
+                  <Eye
+                    size={16}
+                    className="absolute right-3 cursor-pointer"
+                    onClick={togglePasswordVisibility}
+                  />
+                )}
+              </div>
+            </div>
+            <div className="flex flex-col gap-2 my-2 text-sm text-gray-400">
+              <div className="flex gap-2 items-center">
+                <CircleCheck
+                  className="h-4 w-4"
+                  fillRule="inherit"
+                  color={isPasswordLengthValid ? "green" : "grey"}
                 />
-              ) : (
-                <Eye
-                  size={16}
-                  className="absolute right-3 cursor-pointer"
-                  onClick={togglePasswordVisibility}
+                <p>Password must be at least 8 characters long.</p>
+              </div>
+              <div className="flex gap-2 items-center">
+                <CircleCheck
+                  className="h-4 w-4"
+                  fillRule="inherit"
+                  color={isPasswordContainsNumber ? "green" : "grey"}
                 />
-              )} */}
+                <p>Password must contain at least 1 number.</p>
+              </div>
+              <div className="flex gap-2 items-center">
+                <CircleCheck
+                  className="h-4 w-4"
+                  fillRule="inherit"
+                  color={isPasswordContainsSpecialChar ? "green" : "grey"}
+                />
+                <p>Password must contain a special character.</p>
               </div>
             </div>
 
@@ -157,19 +196,6 @@ const SignUp = () => {
                   required
                   className="w-full"
                 />
-                {/* {!showPassword ? (
-                <EyeClosed
-                  size={16}
-                  className="absolute right-3 cursor-pointer"
-                  onClick={togglePasswordVisibility}
-                />
-              ) : (
-                <Eye
-                  size={16}
-                  className="absolute right-3 cursor-pointer"
-                  onClick={togglePasswordVisibility}
-                />
-              )} */}
               </div>
             </div>
           </div>
@@ -178,6 +204,7 @@ const SignUp = () => {
             type="submit"
             className="w-full"
             variant="secondary"
+            disabled={!passwordValid}
           >
             Continue
           </Button>
