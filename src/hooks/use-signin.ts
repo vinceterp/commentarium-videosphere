@@ -42,12 +42,21 @@ export function useSignIn() {
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => {
-      toast({
-        variant: "destructive",
-        title: "Log in Failed",
-        description:
-          error?.response?.data?.message || "An error occurred during login.",
-      });
+      if (error?.response?.data?.message === "Email not verified") {
+        toast({
+          variant: "destructive",
+          title: "Email Not Verified",
+          description: "Please verify your email address before logging in.",
+        });
+        navigate("/verify-email"); // Redirect to email verification page
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Log in Failed",
+          description:
+            error?.response?.data?.message || "An error occurred during login.",
+        });
+      }
     },
     retry: false, // Disable automatic retries
   });
