@@ -12,6 +12,7 @@ export interface User {
   token: string;
   refreshToken: string;
   userId?: number;
+  isEmailVerified?: boolean;
 }
 
 export interface UserStore {
