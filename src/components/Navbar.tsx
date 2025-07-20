@@ -79,7 +79,7 @@ const Navbar = () => {
               </Link>
             ) : isAuthenticated ? (
               <>
-                <p>{`Welcome, ${user?.firstName || user?.email}`}</p>
+                <p className="text-right">{`Welcome, ${user?.firstName || user?.email}`}</p>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Avatar className="h-8 w-8 cursor-pointer">
