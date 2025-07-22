@@ -24,12 +24,15 @@ const PostPage = () => {
       <div className="max-w-4xl mx-auto space-y-8">
         <div>
           <h1 className="text-2xl font-bold text-start animate-fade-in">
-            {isLoading ? "Loading..." : post?.title}
+            {isLoading ? <Skeleton className="h-8 w-64" /> : post?.title}
           </h1>
           <div className="flex items-center justify-between gap-16 mt-4">
             <div className="flex items-center gap-2">
               {isLoading ? (
-                <p className="font-bold">{"Loading..."}</p>
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-8 w-8 rounded-full" />
+                  <Skeleton className="h-4 w-16" />
+                </div>
               ) : (
                 <>
                   <Avatar className="flex h-8 w-8 cursor-pointer">
@@ -48,7 +51,7 @@ const PostPage = () => {
 
             <span className="text-md text-gray-100 text-right">
               {isLoading ? (
-                <>{"Loading..."}</>
+                <Skeleton className="h-4 w-16" />
               ) : (
                 <>
                   {"Posted on "}
@@ -100,7 +103,11 @@ const PostPage = () => {
 
         <div className="space-y-8">
           {isLoading ? (
-            <p>{"Loading..."}</p>
+            <div className="flex-col space-y-4">
+              <Skeleton className="h-24 w-full" />
+              <Skeleton className="h-24 w-full" />
+              <Skeleton className="h-24 w-full" />
+            </div>
           ) : (
             <CommentSection postId={post?.id} />
           )}
