@@ -45,9 +45,14 @@ const examples = [
 const Index = () => {
   return (
     <div className=" flex flex-col items-center justify-center m-4 gap-12">
-      <h1 className="text-4xl font-bold text-center animate-fade-in pt-8">
-        Hidden comments? Start the discussion you weren't meant to 🗣️
-      </h1>
+      <div>
+        <h1 className="text-4xl font-bold text-center animate-fade-in pt-8">
+          Speak Your Mind 🗣️
+        </h1>
+        <h2 className="text-2xl text-center animate-fade-in pt-8 mt-[-16px]">
+          Even When Creators Won’t Let You.
+        </h2>
+      </div>
 
       <div className="w-full animate-fade-in">
         <URLSubmitForm />
