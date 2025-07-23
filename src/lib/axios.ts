@@ -57,7 +57,7 @@ api.interceptors.response.use(
     if (error.response && error.response.status === 404) {
       return Promise.reject(error);
     }
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response.status === 401 && originalRequest._retry) {
       originalRequest._retry = true;
       try {
         await refreshTokenFn(); // Call your refresh token function here
