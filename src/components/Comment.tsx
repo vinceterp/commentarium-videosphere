@@ -23,16 +23,22 @@ interface CommentProps {
   comment: CommentType;
   depth?: number;
   createComment: ({ content, parentCommentId }: CreateCommentVars) => void;
+  postId?: string;
 }
 
-const Comment = ({ comment, depth = 0, createComment }: CommentProps) => {
+const Comment = ({
+  postId,
+  comment,
+  depth = 0,
+  createComment,
+}: CommentProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(comment.content);
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [replyContent, setReplyContent] = useState("");
   const { user } = useUser();
   const { mutate: deleteComment } = useDeleteCommentMutation();
-  const { mutate: updateComment } = useUpdateCommentMutation();
+  const { mutate: updateComment } = useUpdateCommentMutation(postId || "");
 
   const handleDelete = () => {
     deleteComment({ commentId: comment.id });
