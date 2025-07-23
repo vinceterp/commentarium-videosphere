@@ -44,6 +44,29 @@ export function useCreateCommentMutation(postId: string) {
         postId,
       ]);
 
+      if (newCommentData.parentCommentId) {
+        // If replying to a comment, find the parent comment and add the new reply
+        const updatedComments = previousComments.map((comment: any) => {
+          if (comment.id === newCommentData.parentCommentId) {
+            const newReply = {
+              author: user,
+              id: Date.now(), // Temporary ID until the server responds
+              content: newCommentData.content,
+              createdAt: new Date().toISOString(),
+              likes: [],
+              replies: [],
+            };
+            return {
+              ...comment,
+              replies: [...(comment.replies || []), newReply],
+            };
+          }
+          return comment;
+        });
+        queryClient.setQueryData(["getComments", postId], updatedComments);
+        return { previousComments };
+      }
+
       const newComment = {
         author: user,
         id: Date.now(), // Temporary ID until the server responds
