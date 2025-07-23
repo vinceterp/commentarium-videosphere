@@ -108,6 +108,7 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
           comments.length > 0 &&
           comments.map((comment) => (
             <Comment
+              postId={postId}
               key={comment?.id}
               comment={comment}
               createComment={createComment}

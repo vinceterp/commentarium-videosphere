@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import api, { CustomAxiosError, queryClient } from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "./use-toast";
@@ -9,7 +10,7 @@ type updateCommentVars = {
   unlikedBy?: number;
 };
 
-export function useUpdateCommentMutation() {
+export function useUpdateCommentMutation(postId: string) {
   const { toast } = useToast();
 
   return useMutation({
@@ -28,6 +29,30 @@ export function useUpdateCommentMutation() {
       });
       return data;
     },
+    onMutate: async (newCommentData) => {
+      await queryClient.cancelQueries({ queryKey: ["getComments", postId] });
+      const previousComments: any[] = queryClient.getQueryData([
+        "getComments",
+        postId,
+      ]);
+
+      const newComments = previousComments?.map((comment: any) => {
+        if (comment.id === newCommentData.commentId) {
+          return {
+            ...comment,
+            content: newCommentData.content ?? comment.content,
+            likes: newCommentData.likedBy
+              ? [...(comment.likes || []), newCommentData.likedBy]
+              : comment.likes.filter(
+                  (like: number) => like !== newCommentData.unlikedBy,
+                ),
+          };
+        }
+        return comment;
+      });
+      queryClient.setQueryData(["getComments", postId], newComments);
+      return { previousComments };
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["getComments"],
@@ -37,9 +62,12 @@ export function useUpdateCommentMutation() {
         title: "Comment Updated",
         description: "Your comment has been updated successfully.",
       });
-      // Invalidate queries or perform any other success actions
     },
-    onError: (error: CustomAxiosError) => {
+    onError: (error: CustomAxiosError, _, context) => {
+      queryClient.setQueryData(
+        ["getComments", postId],
+        context?.previousComments,
+      );
       toast({
         variant: "destructive",
         title: "Error",
