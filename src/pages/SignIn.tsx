@@ -55,6 +55,12 @@ const SignIn = () => {
               required
               className="w-full"
             />
+            <label
+              htmlFor="password"
+              className=" flex text-sm font-medium text-gray-200 mt-4"
+            >
+              Password
+            </label>
             <div className="flex items-center relative">
               <Input
                 id="password"
