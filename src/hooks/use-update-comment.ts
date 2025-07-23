@@ -57,11 +57,11 @@ export function useUpdateCommentMutation(postId: string) {
       queryClient.invalidateQueries({
         queryKey: ["getComments"],
       });
-      toast({
-        variant: "default",
-        title: "Comment Updated",
-        description: "Your comment has been updated successfully.",
-      });
+      // toast({
+      //   variant: "default",
+      //   title: "Comment Updated",
+      //   description: "Your comment has been updated successfully.",
+      // });
     },
     onError: (error: CustomAxiosError, _, context) => {
       queryClient.setQueryData(

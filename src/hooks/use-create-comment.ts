@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation } from "@tanstack/react-query";
 import api, { CustomAxiosError, queryClient } from "@/lib/axios";
 import { useToast } from "./use-toast";
@@ -11,7 +12,7 @@ export type CreateCommentVars = {
 
 export function useCreateCommentMutation(postId: string) {
   const { toast } = useToast();
-  const { isAuthenticated, logout } = useUser();
+  const { isAuthenticated, user } = useUser();
   const { handleLogout } = useLogout();
 
   return useMutation({
@@ -30,13 +31,34 @@ export function useCreateCommentMutation(postId: string) {
       queryClient.invalidateQueries({
         queryKey: ["getComments", postId],
       });
-      toast({
-        variant: "default",
-        title: "Comment Created",
-        description: "Your comment has been created successfully.",
-      });
+      // toast({
+      //   variant: "default",
+      //   title: "Comment Created",
+      //   description: "Your comment has been created successfully.",
+      // });
     },
-    onError: (error: CustomAxiosError) => {
+    onMutate: async (newCommentData) => {
+      await queryClient.cancelQueries({ queryKey: ["getComments", postId] });
+      const previousComments: any[] = queryClient.getQueryData([
+        "getComments",
+        postId,
+      ]);
+
+      const newComment = {
+        author: user,
+        id: Date.now(), // Temporary ID until the server responds
+        content: newCommentData.content,
+        createdAt: new Date().toISOString(),
+        likes: [],
+        replies: [],
+      };
+      queryClient.setQueryData(["getComments", postId], (old: any[]) => [
+        newComment,
+        ...(old || []),
+      ]);
+      return { previousComments };
+    },
+    onError: (error: CustomAxiosError, _, context) => {
       if (error.response?.status === 401 || error.response?.status === 403) {
         handleLogout(true);
       } else {
@@ -46,6 +68,10 @@ export function useCreateCommentMutation(postId: string) {
           description: error.response?.data?.message,
         });
       }
+      queryClient.setQueryData(
+        ["getComments", postId],
+        context?.previousComments,
+      );
     },
   });
 }
