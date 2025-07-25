@@ -95,7 +95,7 @@ const Comment = ({
           <div className="flex items-center gap-3">
             <Avatar className="h-8 w-8">
               <AvatarImage
-                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${comment.author}`}
+                src={comment.author?.avatarUrl || "/default-avatar.png"}
               />
               <AvatarFallback>
                 {comment.author?.username?.slice(0, 2).toUpperCase()}

@@ -35,9 +35,10 @@ const PostPage = () => {
                 </div>
               ) : (
                 <>
-                  <Avatar className="flex h-8 w-8 cursor-pointer">
+                  <Avatar className="h-8 w-8">
                     <AvatarImage
-                      src={`https://api.dicebear.com/7.x/avataaars/svg?seed=user`}
+                      className="rounded-full"
+                      src={post?.author?.avatarUrl || "/default-avatar.png"}
                     />
                   </Avatar>
                   <p className="font-bold">
