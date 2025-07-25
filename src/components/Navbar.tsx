@@ -84,7 +84,7 @@ const Navbar = () => {
                   <PopoverTrigger asChild>
                     <Avatar className="h-8 w-8 cursor-pointer">
                       <AvatarImage
-                        src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.username || user?.email || "user"}`}
+                        src={user?.avatarUrl || "/default-avatar.png"}
                       />
                     </Avatar>
                   </PopoverTrigger>

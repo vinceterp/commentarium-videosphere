@@ -49,16 +49,16 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    if (!originalRequest._retry) {
-      originalRequest._retry = true; // Prevent infinite loop
-    } else {
-      return Promise.reject(error);
-    }
+    // if (!originalRequest._retry) {
+    //   originalRequest._retry = true; // Prevent infinite loop
+    // } else {
+    //   return Promise.reject(error);
+    // }
     if (error.response && error.response.status === 404) {
       return Promise.reject(error);
     }
     if (error.response.status === 401 && originalRequest._retry) {
-      originalRequest._retry = true;
+      // originalRequest._retry = true;
       try {
         await refreshTokenFn(); // Call your refresh token function here
         return api(originalRequest); // Retry the original request

@@ -1,4 +1,3 @@
-import api from "@/lib/axios";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
@@ -13,6 +12,7 @@ export interface User {
   refreshToken: string;
   userId?: number;
   isEmailVerified?: boolean;
+  avatarUrl?: string; // Optional field for user avatar
 }
 
 export interface UserStore {
